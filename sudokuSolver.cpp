@@ -6,7 +6,7 @@
 
 int main()
 {
-    table_t t;
+    table_t t(std::cin);
     t.print(std::cout);
     std::cout << "Hello World!\n";
 }

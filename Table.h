@@ -34,16 +34,16 @@ public:
 	uint8_t getNumOfPos()const { return num; }
 	uint8_t getOnlyPos()const{
 		if (getNumOfPos() != 1)return 0;
-		uint8_t i = 0;
+		uint8_t i = 1;
 		while (!d[i-1]&&i<10)i++;
 		return (i)%10;
 	}
 	operator uint8_t() const {
 		return u;
 	}
-	operator uint8_t&() {
+	/*operator uint8_t& () {
 		return u;
-	}
+	}*/
 };
 struct pos {
 	uint8_t r, c;
@@ -62,21 +62,22 @@ struct posdatadir : public posdata {
 
 class table_t {
 	cell cells[9][9];//posibble values of cells of the table
+public:
 	std::list <posdata> modifiedCells;
 	std::list <posdatadir> modifiedSegmens;
-public:
 	table_t();
 	table_t(std::istream& is);
 	table_t(const table_t& t);
-	void print(std::ostream& os) const;
+	void print(std::ostream& os, uint8_t v = 0) const;
 
 	void place(uint8_t v, uint8_t r, uint8_t c);
 	void removePossibleValue(uint8_t v, uint8_t r, uint8_t c);
+	void leavePossibleValue(uint8_t v, uint8_t r, uint8_t c);
 	void removePossibleValueInSegmens(uint8_t v, uint8_t r, uint8_t c, bool h);
 	uint8_t getNumInSegmens(uint8_t v, uint8_t r, uint8_t c, bool h);
-	void doModifiedSegFromCell(std::list<posdata>::iterator& cell);
+	void doModifiedSegFromCell(posdata cell);
 	void doModifiedSegFromCells();
-	void doModifiedSeg(std::list<posdatadir>::iterator i);
+	void doModifiedSeg(posdatadir i);
 	void doModifiedSegs();
 	void doModifieds();
 	/*void place(uint8_t v, pos p);
